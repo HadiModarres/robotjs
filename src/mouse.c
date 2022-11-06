@@ -237,28 +237,31 @@ void doubleClick(MMMouseButton button)
 
 #if defined(IS_MACOSX)
 
-	/* Double click for Mac. */
-	const CGPoint currentPos = CGPointFromMMPoint(getMousePos());
-	const CGEventType mouseTypeDown = MMMouseToCGEventType(true, button);
-	const CGEventType mouseTypeUP = MMMouseToCGEventType(false, button);
+    const CGPoint currentPos = CGPointFromMMPoint(getMousePos());
 
-	CGEventRef event = CGEventCreateMouseEvent(NULL, mouseTypeDown, currentPos, kCGMouseButtonLeft);
+  CGEventRef theEvent = CGEventCreateMouseEvent(NULL, kCGEventLeftMouseDown, currentPos, kCGMouseButtonLeft);
 
-	/* Set event to double click. */
-	CGEventSetIntegerValueField(event, kCGMouseEventClickState, 2);
+  CGEventSetIntegerValueField(theEvent, kCGMouseEventClickState, 2);
+  CGEventPost(kCGHIDEventTap, theEvent);
 
-	CGEventPost(kCGHIDEventTap, event);
+  CGEventSetType(theEvent, kCGEventLeftMouseUp);
+  CGEventPost(kCGHIDEventTap, theEvent);
 
-	CGEventSetType(event, mouseTypeUP);
-	CGEventPost(kCGHIDEventTap, event);
+  microsleep(50);
 
-	CFRelease(event);
+  CGEventSetType(theEvent, kCGEventLeftMouseDown);
+  CGEventPost(kCGHIDEventTap, theEvent);
+
+  CGEventSetType(theEvent, kCGEventLeftMouseUp);
+  CGEventPost(kCGHIDEventTap, theEvent);
+
+  CFRelease(theEvent);
 
 #else
 
 	/* Double click for everything else. */
 	clickMouse(button);
-	microsleep(200);
+	microsleep(50);
 	clickMouse(button);
 
 #endif
