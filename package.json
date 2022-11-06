@@ -1,5 +1,5 @@
 {
-  "name": "@jitsi/robotjs",
+  "name": "@hmodarres/robotjs",
   "version": "0.6.11",
   "description": "Node.js Desktop Automation.",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "test:darwin:linux": "jasmine test/**/*.js",
     "test-keyboard": "node test/keyboard.js",
     "test:win32": "jasmine test/**/*.js",
-    "install": "node-gyp-build",
+    "build": "node-gyp-build",
     "prebuild": "prebuildify -t 16.0.0 --napi --strip",
     "prebuild-darwin-universal": "prebuildify -t 16.0.0 --napi --strip --arch x64+arm64",
     "prebuild-linux-x64": "prebuildify -t 16.0.0 --napi --strip",
@@ -57,7 +57,6 @@
     "jasmine": "^2.99.0",
     "prebuildify": "^5.0.0",
     "run-script-os": "^1.0.3",
-    "tape": "^4.8.0",
-    "targetpractice": "0.0.7"
+    "tape": "^4.8.0"
   }
 }
